@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f5f1">
+  <title>나를 소개합니다</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f6f5f1;
+      --card: #fffefa;
+      --ink: #20231f;
+      --muted: #777b72;
+      --line: #e8e7df;
+      --green: #355d4b;
+      --green-light: #e8efe9;
+      --orange: #e99a67;
+      --shadow: 0 24px 70px rgba(39, 48, 39, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      padding: 48px 24px;
+      background:
+        radial-gradient(ellipse at 10% 10%, rgba(233, 154, 103, 0.13), transparent 30%),
+        radial-gradient(ellipse at 90% 85%, rgba(53, 93, 75, 0.10), transparent 32%),
+        var(--paper);
+      color: var(--ink);
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      width: min(100%, 1040px);
+      margin: 0 auto;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 25px;
+      height: 25px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: 13px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+      overflow: hidden;
+      min-height: 620px;
+      border: 1px solid rgba(232, 231, 223, 0.8);
+      border-radius: 28px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .editor {
+      padding: 54px 48px;
+      border-right: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 15px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.17em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 4vw, 46px);
+      letter-spacing: -0.07em;
+      line-height: 1.2;
+    }
+
+    .intro {
+      margin: 15px 0 34px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .field {
+      margin-top: 21px;
+    }
+
+    .field label,
+    .hobby-title {
+      display: block;
+      margin-bottom: 9px;
+      color: #4c514a;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      height: 47px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      outline: none;
+      background: #fff;
+      color: var(--ink);
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .input-wrap input::placeholder {
+      color: #b0b2aa;
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(53, 93, 75, 0.1);
+    }
+
+    .hobbies {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .hobbies input {
+      min-width: 0;
+      padding: 0 10px;
+      text-align: center;
+    }
+
+    .hint {
+      margin: 9px 0 0;
+      color: #9a9d94;
+      font-size: 11px;
+    }
+
+    .preview {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 54px clamp(32px, 6vw, 72px);
+      background:
+        radial-gradient(circle at 85% 13%, rgba(233, 154, 103, 0.19), transparent 27%),
+        linear-gradient(145deg, #f8f8f2, #f1f3eb);
+    }
+
+    .preview-label {
+      position: absolute;
+      top: 31px;
+      right: 34px;
+      color: #858a80;
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: 0.15em;
+    }
+
+    .avatar {
+      display: grid;
+      width: 88px;
+      height: 88px;
+      margin-bottom: 27px;
+      place-items: center;
+      border: 6px solid rgba(255, 255, 255, 0.75);
+      border-radius: 28px;
+      background: var(--green);
+      box-shadow: 0 10px 24px rgba(53, 93, 75, 0.17);
+      color: white;
+      font-size: 37px;
+      transform: rotate(-4deg);
+    }
+
+    .greeting {
+      margin: 0 0 7px;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .name {
+      margin: 0;
+      font-size: clamp(36px, 5vw, 54px);
+      letter-spacing: -0.075em;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+    }
+
+    .department {
+      margin: 12px 0 31px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .divider {
+      width: 42px;
+      height: 3px;
+      margin-bottom: 25px;
+      border-radius: 9px;
+      background: var(--orange);
+    }
+
+    .detail-heading {
+      margin: 0 0 12px;
+      color: #858a80;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 32px;
+      margin-bottom: 26px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 12px;
+      border: 1px solid #dfe8df;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .food {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      color: #4c514a;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .food-icon {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 12px;
+      background: #fff3e9;
+      font-size: 18px;
+    }
+
+    .footer {
+      margin: 21px 0 0;
+      color: #93968e;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 25px 16px;
+      }
+
+      .topline {
+        margin-bottom: 20px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        border-radius: 22px;
+      }
+
+      .editor {
+        padding: 34px 27px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .preview {
+        min-height: 480px;
+        padding: 58px 32px 38px;
+      }
+
+      .preview-label {
+        top: 24px;
+        right: 25px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .hobbies {
+        grid-template-columns: 1fr;
+      }
+
+      .hobbies input {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topline">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">나</span> MY LITTLE PROFILE</div>
+      <span>자기소개</span>
+    </header>
+
+    <div class="layout">
+      <section class="editor" aria-labelledby="page-title">
+        <p class="eyebrow">HELLO, NICE TO MEET YOU</p>
+        <h1 id="page-title">나를<br>소개합니다<span aria-hidden="true">.</span></h1>
+        <p class="intro">왼쪽에 내 정보를 입력해 보세요.<br>오른쪽 소개 카드가 바로 업데이트돼요.</p>
+
+        <form id="profile-form" autocomplete="off">
+          <div class="field">
+            <label for="name-input">이름</label>
+            <div class="input-wrap">
+              <input id="name-input" name="name" type="text" placeholder="예: 김민지">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="department-input">학과</label>
+            <div class="input-wrap">
+              <input id="department-input" name="department" type="text" placeholder="예: 컴퓨터공학과">
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="hobby-title">취미 3가지</span>
+            <div class="hobbies">
+              <div class="input-wrap"><input name="hobby1" type="text" aria-label="첫 번째 취미" placeholder="취미 1"></div>
+              <div class="input-wrap"><input name="hobby2" type="text" aria-label="두 번째 취미" placeholder="취미 2"></div>
+              <div class="input-wrap"><input name="hobby3" type="text" aria-label="세 번째 취미" placeholder="취미 3"></div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="food-input">좋아하는 음식</label>
+            <div class="input-wrap">
+              <input id="food-input" name="food" type="text" placeholder="예: 떡볶이">
+            </div>
+            <p class="hint">입력한 내용은 이 페이지 안에서만 보여요.</p>
+          </div>
+        </form>
+      </section>
+
+      <section class="preview" aria-label="내 소개 미리보기">
+        <span class="preview-label">PROFILE CARD · 01</span>
+        <div class="avatar" aria-hidden="true">✦</div>
+        <p class="greeting">안녕하세요, 저는</p>
+        <h2 class="name" id="name-output">나의 이름</h2>
+        <p class="department" id="department-output">나의 학과</p>
+        <div class="divider" aria-hidden="true"></div>
+        <p class="detail-heading">MY HOBBIES</p>
+        <div class="tag-list" id="hobbies-output" aria-live="polite">
+          <span class="tag">취미 1</span>
+          <span class="tag">취미 2</span>
+          <span class="tag">취미 3</span>
+        </div>
+        <p class="detail-heading">FAVORITE FOOD</p>
+        <p class="food"><span class="food-icon" aria-hidden="true">🍽️</span><span id="food-output">좋아하는 음식</span></p>
+      </section>
+    </div>
+
+    <p class="footer">나만의 이야기를 한 줄씩 채워 보세요.</p>
+  </main>
+
+  <script>
+    const form = document.getElementById("profile-form");
+    const nameOutput = document.getElementById("name-output");
+    const departmentOutput = document.getElementById("department-output");
+    const hobbiesOutput = document.getElementById("hobbies-output");
+    const foodOutput = document.getElementById("food-output");
+
+    function updateProfile() {
+      const data = new FormData(form);
+      nameOutput.textContent = data.get("name").trim() || "나의 이름";
+      departmentOutput.textContent = data.get("department").trim() || "나의 학과";
+      foodOutput.textContent = data.get("food").trim() || "좋아하는 음식";
+
+      hobbiesOutput.replaceChildren();
+      ["hobby1", "hobby2", "hobby3"].forEach((key, index) => {
+        const hobby = data.get(key).trim() || `취미 ${index + 1}`;
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = hobby;
+        hobbiesOutput.append(tag);
+      });
+    }
+
+    form.addEventListener("input", updateProfile);
+  </script>
+</body>
+</html>
